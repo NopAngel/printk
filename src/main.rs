@@ -3,7 +3,7 @@
 //    with: rust
 //
 
-use printk::{printk, printk_at_y, Printk};
+use printk::{Printk, printk, printk_at_y};
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -55,8 +55,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn show_help(pk: &Printk) -> Result<(), Box<dyn std::error::Error>> {
     // Extract the version that is in `Cargo.toml` and place it in a variable
     let version = env!("CARGO_PKG_VERSION");
-    println!("\n                     Printk v{}",version);
-
+    println!("\n                     Printk v{}", version);
 
     pk.println("       {help}  Print messages with Nerd Font icons")?;
     println!();
@@ -110,7 +109,10 @@ fn run_demo() -> Result<(), Box<dyn std::error::Error>> {
     for i in 1..=5 {
         let current_line = 22;
         pk.clear_from_y(current_line)?;
-        pk.print_at_y(current_line, &format!("  {{arrow-right}} Processing... {}/5", i))?;
+        pk.print_at_y(
+            current_line,
+            &format!("  {{arrow-right}} Processing... {}/5", i),
+        )?;
         std::thread::sleep(std::time::Duration::from_millis(500));
     }
 
@@ -130,10 +132,34 @@ fn list_icons(pk: &Printk) -> Result<(), Box<dyn std::error::Error>> {
 
     let categories = [
         ("Files", vec!["folder", "file", "doc", "img", "pdf", "zip"]),
-        ("Status", vec!["ok", "error", "warning", "info", "question", "help", "success", "fail", "check", "warn"]),
-        ("Arrows", vec!["arrow", "arrow-right", "arrow-left", "arrow-up", "arrow-down"]),
-        ("UI", vec!["gear", "home", "star", "heart", "trash", "edit", "add", "plus", "minus", "close", "search"]),
-        ("Programming", vec!["rust", "python", "js", "ts", "java", "go", "c", "cpp"]),
+        (
+            "Status",
+            vec![
+                "ok", "error", "warning", "info", "question", "help", "success", "fail", "check",
+                "warn",
+            ],
+        ),
+        (
+            "Arrows",
+            vec![
+                "arrow",
+                "arrow-right",
+                "arrow-left",
+                "arrow-up",
+                "arrow-down",
+            ],
+        ),
+        (
+            "UI",
+            vec![
+                "gear", "home", "star", "heart", "trash", "edit", "add", "plus", "minus", "close",
+                "search",
+            ],
+        ),
+        (
+            "Programming",
+            vec!["rust", "python", "js", "ts", "java", "go", "c", "cpp"],
+        ),
         ("Git", vec!["git", "branch", "commit", "merge"]),
     ];
 
