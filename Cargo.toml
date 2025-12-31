@@ -1,0 +1,10 @@
+[package]
+name = "printk"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+colored = "2.1"
+lazy_static = "1.4"
+regex = "1.10"
+thiserror = "1.0"
