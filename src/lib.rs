@@ -144,19 +144,16 @@ impl Printk {
         Ok(())
     }
 
-
     pub fn print_at_y_and_return(&self, y: i16, message: &str) -> Result<(), PrintkError> {
         print!("\x1B[s");
 
         self.print_at_y(y, message)?;
-
 
         print!("\x1B[u");
         io::stdout().flush()?;
 
         Ok(())
     }
-
 
     pub fn print(&self, message: &str) -> Result<(), PrintkError> {
         let processed = self.process_message(message);
@@ -171,7 +168,6 @@ impl Printk {
         Ok(())
     }
 
-
     pub fn process_message(&self, message: &str) -> String {
         if !self.show_icons {
             return message.to_string();
@@ -179,12 +175,10 @@ impl Printk {
 
         let mut result = message.to_string();
 
-
         for (key, icon) in ICON_MAP.iter() {
             let pattern = format!("{{{}}}", key);
             result = result.replace(&pattern, icon);
         }
-
 
         if let Some(color) = self.default_color {
             result = result.color(color).to_string();
@@ -206,13 +200,12 @@ impl Printk {
         None
     }
 
-
     pub fn list_icons(&self) -> Vec<(String, String)> {
-        ICON_MAP.iter()
+        ICON_MAP
+            .iter()
             .map(|(name, icon)| (name.to_string(), icon.to_string()))
             .collect()
     }
-
 
     pub fn clear_from_y(&self, y: i16) -> Result<(), PrintkError> {
         if y < 0 {
@@ -223,7 +216,6 @@ impl Printk {
         io::stdout().flush()?;
         Ok(())
     }
-
 
     pub fn clear_lines(&self, start_y: i16, count: u16) -> Result<(), PrintkError> {
         if start_y < 0 {
